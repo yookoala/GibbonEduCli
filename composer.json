@@ -1,0 +1,25 @@
+{
+    "name": "gibbonedu/cli",
+    "description": "CLI launcher for Gibbon.",
+    "type": "library",
+    "license": "mit",
+    "bin": ["bin/gibbon-cli.phar"],
+    "autoload": {
+        "psr-4": {
+            "Gibbonedu\\Cli\\": "src/"
+        }
+    },
+    "scripts": {
+        "build": [
+            "@php -c build.ini build.php --target=bin/gibbon-cli.phar"
+        ],
+        "post-install-cmd": "@composer build"
+    },
+    "authors": [
+        {
+            "name": "Koala Yeung",
+            "email": "koalay@gmail.com"
+        }
+    ],
+    "require": {}
+}
