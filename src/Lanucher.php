@@ -24,7 +24,8 @@ class Launcher
      */
     public static function bootstrap(string $pwd)
     {
-        list($options, $args) = static::getOptions('h', ['help']);
+        list($options, $args) = static::getOptions('h', ['path:', 'help']);
+        $pwd = $options['path'] ?? $pwd;
         try {
             static::doBootstrap($pwd);
         } catch (\Exception $e) {
@@ -59,6 +60,11 @@ class Launcher
             echo "===================\n";
             echo "Gibbon CLI Launcher\n";
             echo "-------------------\n";
+            if (!is_dir(getcwd() . DIRECTORY_SEPARATOR . $pwd)) {
+                echo 'Provided Path: ' . $pwd . "\n";
+                throw new \Exception('The path provided is not a directory: ' . $pwd);
+            }
+            $pwd = realpath($pwd);
             echo 'Working Directory: ' . $pwd . "\n";
             $gibbonRoot = static::findRoot(static::pathParents($pwd), 'gibbonedu/core');
             echo 'Gibbon Directory:  ' . $gibbonRoot . "\n";
@@ -158,13 +164,16 @@ class Launcher
         $filename = basename($scriptname);
         return <<<TEXT
 Gibbon CLI Launcher is a command launcher to access Gibbon CLI features.
-This should be run within the directory of a Gibbon installation.
+
+This should be run against a Gibbon installation directory.
 Without a Gibbon installation, this launcher can do very little.
 
-Usage: {$filename} [--help]
+Usage: {$filename} [--help] [--path=PATH_TO_GIBBON]
 
 Options:
   --help  Print this message.
+  --path  Path to a Gibbon installation folder.
+          Default: current working directory.
 TEXT;
     }
 }

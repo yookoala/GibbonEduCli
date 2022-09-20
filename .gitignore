@@ -1,6 +1,6 @@
-# Ignore generated files
-*.phar
-gibbon-cli
+# Ignore generated test files
+/*.phar
+/gibbon-cli
 
 # Ignore composer generated directory
 /vendor

@@ -3,7 +3,7 @@
     "description": "CLI launcher for Gibbon.",
     "type": "library",
     "license": "mit",
-    "bin": ["bin/gibbon-cli.phar"],
+    "bin": ["bin/gibbon-cli"],
     "autoload": {
         "psr-4": {
             "Gibbonedu\\Cli\\": "src/"
@@ -11,9 +11,10 @@
     },
     "scripts": {
         "build": [
-            "@php -c build.ini build.php --target=bin/gibbon-cli.phar"
+            "@php -c build.ini build.php --target=bin/gibbon-cli"
         ],
-        "post-install-cmd": "@composer build"
+        "pre-package-install": "@composer build",
+        "pre-package-update": "@composer build"
     },
     "authors": [
         {
